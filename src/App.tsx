@@ -1,21 +1,32 @@
-import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from './store/hooks'
-import { updateBoard } from './store';
-import { createBoard } from './utils/createBoard';
-import Board from './components/Board';
-import { checkForColumnOfThree, checkForRowOfFour, checkForRowOfThree, isColumnOfFour } from './utils/moveCheckLogic';
-import { formulaForColumnOfFour, formulaForColumnOfThree, generateInvalidMoves } from './utils/formulas';
 
-function App ()  {
+
+import { useEffect } from "react";
+import Board from "./components/Board";
+import { moveBelow, updateBoard } from "./store";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { createBoard } from "./utils/createBoard";
+import {
+  formulaForColumnOfFour,
+  formulaForColumnOfThree,
+  generateInvalidMoves,
+} from "./utils/formulas";
+import {
+  checkForColumnOfThree,
+  checkForRowOfFour,
+  checkForRowOfThree,
+  isColumnOfFour,
+} from "./utils/moveCheckLogic";
+
+function App() {
   const dispatch = useAppDispatch();
+  const board = useAppSelector(({ candyCrush: { board } }) => board);
+  const boardSize = useAppSelector(
+    ({ candyCrush: { boardSize } }) => boardSize
+  );
 
-  const board = useAppSelector(({candyCrush:{board}}) => board);
-  const boardSize = useAppSelector(({candyCrush:{boardSize}}) => boardSize);
-
-  useEffect(()=>{
-    dispatch(updateBoard(createBoard(boardSize)))
-   
-  }, [boardSize, dispatch]);
+  useEffect(() => {
+    dispatch(updateBoard(createBoard(boardSize)));
+  }, [dispatch, boardSize]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -33,16 +44,16 @@ function App ()  {
       );
       checkForRowOfThree(newBoard, boardSize, generateInvalidMoves(boardSize));
       dispatch(updateBoard(newBoard));
-      //dispatch(());
+      dispatch(moveBelow());
     }, 150);
     return () => clearInterval(timeout);
   }, [board, dispatch, boardSize]);
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <Board/>
+      <Board />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
