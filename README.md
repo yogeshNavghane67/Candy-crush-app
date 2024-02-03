@@ -4,6 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+![Screenshot (527)](https://github.com/yogeshNavghane67/Candy-crush-app/assets/124075039/de4b7461-db7d-4779-bfa8-3230deaefb76)
+
+
+## Available Scripts
+
 In the project directory, you can run:
 
 ### `npm start`
